@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='rakuten',
-    version='0.1.2',
+    version='0.1.3',
     author='Daniel Perez',
     author_email='daniel@claudetech.com',
     packages=['rakuten', 'rakuten.apis'],
