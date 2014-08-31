@@ -13,7 +13,13 @@ class TravelApi(BaseApi):
         r = requests.get(url, params=params)
         if r.status_code == 200:
             result = r.json()
-            hotels = [r['hotel'] for r in result['hotels']]
+            hotels = [self._parse_hotel(r) for r in result['hotels']]
             return hotels
         else:
             raise RakutenApiException(r.status_code, r.text)
+
+    def _parse_hotel(self, hotel_info):
+        hotel = hotel_info['hotel'][0]['hotelBasicInfo']
+        room_infos = [r['roomInfo'][0]['roomBasicInfo'] for r in hotel_info['hotel'] if 'roomInfo' in r]
+        hotel['room_infos'] = room_infos
+        return hotel
