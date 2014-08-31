@@ -2,10 +2,10 @@ from setuptools import setup
 
 setup(
     name='rakuten',
-    version='0.1.0',
+    version='0.1.1',
     author='Daniel Perez',
     author_email='daniel@claudetech.com',
-    packages=['rakuten'],
+    packages=['rakuten', 'rakuten.apis'],
     url='https://github.com/claudetech/python_rakuten',
     license='LICENSE',
     description='Rakuten API client.',
