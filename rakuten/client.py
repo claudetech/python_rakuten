@@ -8,7 +8,6 @@ class RakutenClient:
            'api_endpoint': 'https://app.rakuten.co.jp/services/api',
            'app_id': app_id,
         }
-        if self._options is not None:
-            self._options.update(kwargs)
+        self._options.update(kwargs)
 
         self.travel = TravelApi(self._options)

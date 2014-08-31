@@ -6,6 +6,10 @@ class BaseApi:
         self._base_url = self._options['api_endpoint']
         if self._base_url.endswith('/'):
             self._base_url = self._base_url[:-1]
+        self._default_params = {
+            'applicationId': self._options['app_id'],
+            'format': 'json',
+        }
 
     def _make_url(self, path):
         if not path.startswith('/'):

@@ -5,10 +5,6 @@ from .base_api import BaseApi
 class TravelApi(BaseApi):
     def __init__(self, options):
         super(TravelApi, self).__init__(options)
-        self._options = options
-        self._default_params = {
-            'applicationId': self._options['app_id'],
-        }
 
     def vacant_hotel_search(self, **kwargs):
         params = self._dict_to_camel_case(kwargs)
