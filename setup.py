@@ -11,6 +11,7 @@ setup(
     description='Rakuten API client.',
     long_description=open('README.md').read(),
     install_requires=[
+         'requests >= 2.3.0'
     ],
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
