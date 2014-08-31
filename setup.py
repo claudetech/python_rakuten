@@ -1,12 +1,12 @@
 from setuptools import setup
 
 setup(
-    name='rakuten_api',
+    name='rakuten',
     version='0.1.0',
     author='Daniel Perez',
     author_email='daniel@claudetech.com',
-    packages=['rakuten_api'],
-    url='https://github.com/claudetech/python_rakuten_api',
+    packages=['rakuten'],
+    url='https://github.com/claudetech/python_rakuten',
     license='LICENSE',
     description='Rakuten API client.',
     long_description=open('README.md').read(),
