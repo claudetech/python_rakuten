@@ -1,6 +1,7 @@
 import re
 import json
 import requests
+from .api_exception import RakutenApiException
 
 class BaseApi:
     def __init__(self, options):

@@ -1,4 +1,3 @@
-from .api_exception import RakutenApiException
 from .base_api import BaseApi
 
 
