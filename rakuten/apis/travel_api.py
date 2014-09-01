@@ -28,6 +28,33 @@ class TravelApi(BaseApi):
             self._parse_hotels_result
         )
 
+    def get_area_class(self, **kwargs):
+        return self._request(
+            '/Travel/GetAreaClass/20131024',
+            kwargs,
+            self._parse_areas
+        )
+
+    def _parse_areas(self, result):
+        final_res = result['areaClasses']['largeClasses'][0]['largeClass'][0]
+        final_res['middle_classes'] = []
+        middle_classes = result['areaClasses']['largeClasses'][0]['largeClass'][1]['middleClasses']
+        for m in middle_classes:
+            cl = m['middleClass'][0]
+            cl['small_classes'] = []
+            sub_classes = m['middleClass'][1]['smallClasses']
+            for s in sub_classes:
+                d = s['smallClass'][0]
+                if len(s['smallClass']) > 1:
+                    d['detail_classes'] = s['smallClass'][1]
+                else:
+                    d['detail_classes'] = []
+                cl['small_classes'].append(d)
+            final_res['middle_classes'].append(cl)
+        return final_res
+
+        r = result['areaClasses']['largeClasses'][0]['largeClass'][1]
+
     def _parse_hotels_result(self, result):
         return [self._parse_hotel(r) for r in result['hotels']]
 
