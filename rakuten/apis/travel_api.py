@@ -43,6 +43,19 @@ class TravelApi(BaseApi):
             self._parse_hotels_result
         )
 
+    def get_hotel_chain_list(self, **kwargs):
+        return self._request(
+            '/Travel/GetHotelChainList/20131024',
+            kwargs,
+            self._parse_hotel_chain
+        )
+
+    def _parse_hotel_chain(self, result):
+        chains = []
+        for chainInfo in result['largeClasses'][0]['largeClass']:
+            new_chains = [r['hotelChain'] for r in chainInfo['hotelChains']]
+            chains.append({'largeClass': chainInfo['largeClassCode'], 'chains': new_chains})
+        return chains
 
     def _parse_areas(self, result):
         final_res = result['areaClasses']['largeClasses'][0]['largeClass'][0]
