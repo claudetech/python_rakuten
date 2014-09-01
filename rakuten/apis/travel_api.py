@@ -35,6 +35,15 @@ class TravelApi(BaseApi):
             self._parse_areas
         )
 
+    def keyword_hotel_search(self, keyword, **kwargs):
+        kwargs['keyword'] = keyword
+        return self._request(
+            '/Travel/KeywordHotelSearch/20131024',
+            kwargs,
+            self._parse_hotels_result
+        )
+
+
     def _parse_areas(self, result):
         final_res = result['areaClasses']['largeClasses'][0]['largeClass'][0]
         final_res['middle_classes'] = []
