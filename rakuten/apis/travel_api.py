@@ -1,14 +1,29 @@
 from .api_exception import RakutenApiException
 from .base_api import BaseApi
 
+
 class TravelApi(BaseApi):
     def __init__(self, options):
         super(TravelApi, self).__init__(options)
         self._default_params['datumType'] = 1
 
+    def simple_hotel_search(self, **kwargs):
+        return self._request(
+            '/Travel/SimpleHotelSearch/20131024',
+            kwargs,
+            self._parse_hotels_result
+        )
+
     def vacant_hotel_search(self, **kwargs):
         return self._request(
             '/Travel/VacantHotelSearch/20131024',
+            kwargs,
+            self._parse_hotels_result
+        )
+
+    def hotel_detail_search(self, **kwargs):
+        return self._request(
+            '/Travel/HotelDetailSearch/20131024',
             kwargs,
             self._parse_hotels_result
         )
@@ -18,6 +33,8 @@ class TravelApi(BaseApi):
 
     def _parse_hotel(self, hotel_info):
         hotel = hotel_info['hotel'][0]['hotelBasicInfo']
-        room_infos = [r['roomInfo'][0]['roomBasicInfo'] for r in hotel_info['hotel'] if 'roomInfo' in r]
-        hotel['room_infos'] = room_infos
+        room_info = [r['roomInfo'][0]['roomBasicInfo'] for r in hotel_info['hotel'] if 'roomInfo' in r]
+        rating_info = [r['hotelRatingInfo'] for r in hotel_info['hotel'] if 'hotelRatingInfo' in r]
+        hotel['room_info'] = room_info
+        hotel['rating_info'] = rating_info
         return hotel
