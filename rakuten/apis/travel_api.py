@@ -1,4 +1,3 @@
-import requests
 from .api_exception import RakutenApiException
 from .base_api import BaseApi
 
@@ -8,16 +7,14 @@ class TravelApi(BaseApi):
         self._default_params['datumType'] = 1
 
     def vacant_hotel_search(self, **kwargs):
-        params = self._dict_to_camel_case(kwargs)
-        params.update(self._default_params)
-        url = self._make_url('/Travel/VacantHotelSearch/20131024')
-        r = requests.get(url, params=params)
-        if r.status_code == 200:
-            result = r.json()
-            hotels = [self._parse_hotel(r) for r in result['hotels']]
-            return hotels
-        else:
-            raise RakutenApiException(r.status_code, r.text)
+        return self._request(
+            '/Travel/VacantHotelSearch/20131024',
+            kwargs,
+            self._parse_hotels_result
+        )
+
+    def _parse_hotels_result(self, result):
+        return [self._parse_hotel(r) for r in result['hotels']]
 
     def _parse_hotel(self, hotel_info):
         hotel = hotel_info['hotel'][0]['hotelBasicInfo']
